@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  bcfinaltheatermanagementbff:
+    image: ${DOCKER_REGISTRY-}bcfinaltheatermanagementbff
+    build:
+      context: .
+      dockerfile: src/BcFinalTheaterManagementBff/Dockerfile
