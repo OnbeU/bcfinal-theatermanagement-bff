@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31424.327
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BcFinalTheaterManagementBff", "BcFinalTheaterManagementBff\BcFinalTheaterManagementBff.csproj", "{86ECC236-6BDE-4FCC-B309-5FB0080D58FF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{86ECC236-6BDE-4FCC-B309-5FB0080D58FF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{86ECC236-6BDE-4FCC-B309-5FB0080D58FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{86ECC236-6BDE-4FCC-B309-5FB0080D58FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{86ECC236-6BDE-4FCC-B309-5FB0080D58FF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {98D78C87-A90E-409C-82FC-B90299EB3AC9}
+	EndGlobalSection
+EndGlobal
