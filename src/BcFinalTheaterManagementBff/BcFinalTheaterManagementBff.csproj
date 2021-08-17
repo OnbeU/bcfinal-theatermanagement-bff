@@ -17,4 +17,8 @@
     <Folder Include="Clients\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\ClientForMovieCatalogService\ClientForMovieCatalogService.csproj" />
+  </ItemGroup>
+
 </Project>

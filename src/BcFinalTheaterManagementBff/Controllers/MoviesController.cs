@@ -1,5 +1,5 @@
-﻿using BcFinalTheaterManagementBff.Clients.MovieCatalog;
-using BcFinalTheaterManagementBff.Models;
+﻿using BcFinalTheaterManagementBff.Models;
+using ClientForMovieCatalogService;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;

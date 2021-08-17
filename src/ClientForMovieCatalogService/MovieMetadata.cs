@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace BcFinalTheaterManagementBff.Clients.MovieCatalog
+namespace ClientForMovieCatalogService
 {
     /// <summary>
     /// The metadata for a movie in our movie catalog.
