@@ -6,3 +6,10 @@ services:
     build:
       context: .
       dockerfile: src/BcFinalTheaterManagementBff/Dockerfile
+
+  fakemoviecatalogsvc:
+    image: ${DOCKER_REGISTRY-}fakemoviecatalogsvc
+    build:
+      context: .
+      dockerfile: src/FakeMovieCatalogSvc/Dockerfile
+
