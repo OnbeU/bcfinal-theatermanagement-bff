@@ -7,7 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BcFinalTheaterManagementBff
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{834949EC-972B-478C-9074-AE759529B3C7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FakeMovieCatalogSvc", "src\FakeMovieCatalogSvc\FakeMovieCatalogSvc.csproj", "{60A2A632-48E8-49BF-B210-8E313459F143}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FakeMovieCatalogSvc", "src\FakeMovieCatalogSvc\FakeMovieCatalogSvc.csproj", "{60A2A632-48E8-49BF-B210-8E313459F143}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClientForMovieCatalogService", "src\ClientForMovieCatalogService\ClientForMovieCatalogService.csproj", "{D321769A-D31E-4D70-9680-772404B11738}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{60A2A632-48E8-49BF-B210-8E313459F143}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{60A2A632-48E8-49BF-B210-8E313459F143}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{60A2A632-48E8-49BF-B210-8E313459F143}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D321769A-D31E-4D70-9680-772404B11738}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D321769A-D31E-4D70-9680-772404B11738}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D321769A-D31E-4D70-9680-772404B11738}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D321769A-D31E-4D70-9680-772404B11738}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
