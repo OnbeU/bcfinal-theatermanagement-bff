@@ -6,6 +6,8 @@ services:
     build:
       context: .
       dockerfile: src/BcFinalTheaterManagementBff/Dockerfile
+    networks:
+      - local-shared
 
   fakemoviecatalogsvc:
     image: ${DOCKER_REGISTRY-}fakemoviecatalogsvc
@@ -13,3 +15,7 @@ services:
       context: .
       dockerfile: src/FakeMovieCatalogSvc/Dockerfile
 
+networks:
+  local-shared:
+    external:
+        name: bc-localdevelopment_network-to-share
