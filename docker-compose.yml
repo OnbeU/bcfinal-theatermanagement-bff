@@ -6,10 +6,3 @@ services:
     build:
       context: .
       dockerfile: src/BcFinalTheaterManagementBff/Dockerfile
-    networks:
-      - local-shared
-
-networks:
-  local-shared:
-    external:
-        name: bc-localdevelopment_network-to-share
