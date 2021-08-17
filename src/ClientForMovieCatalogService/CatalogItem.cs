@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace BcFinalTheaterManagementBff.Clients.MovieCatalog
+namespace ClientForMovieCatalogService
 {
     /// <summary>
     /// An item in our movie catalog.

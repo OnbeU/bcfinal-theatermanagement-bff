@@ -1,5 +1,5 @@
-﻿using BcFinalTheaterManagementBff.Clients.MovieCatalog;
-using BcFinalTheaterManagementBff.Models;
+﻿using BcFinalTheaterManagementBff.Models;
+using ClientForMovieCatalogService;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
@@ -31,15 +31,6 @@ namespace BcFinalTheaterManagementBff.Controllers
             return catalogItems
                 .Select(ci => new Movie(ci.MovieMetadata.ImdbId, ci.MovieMetadata.Title))
                 .ToList();
-
-            // TODO: Add the following as instructions in the bootcamp materials,
-            // then remove it.
-            //var movies = new Movie[]
-            //{
-            //    new Movie(id: "tt0076759", title: "Star Wars: Episode IV - A New Hope"),
-            //    new Movie(id: "tt0193524", title: "The Star Wars Holiday Special")
-            //};
-            //return movies.ToArray();
         }
     }
 }
