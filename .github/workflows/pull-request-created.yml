@@ -128,9 +128,9 @@ jobs:
            --set nameOverride=${{ steps.vars.outputs.url_tag }}-fb \
            --set image.tag=${{ github.sha }} \
            --set replicaCount=1  \
-           --set ingress.enabled= false \
-           --set livenessProbe.enabled= false \
-           --set readinessProbe.enabled= false \
+           --set ingress.enabled=false \
+           --set livenessProbe.enabled=false \
+           --set readinessProbe.enabled=false \
 
     - uses: actions/github-script@v4
       name: 'Create github pr comment and deployment'
