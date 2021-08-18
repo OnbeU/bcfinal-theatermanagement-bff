@@ -48,7 +48,7 @@ jobs:
       run: |
        docker build . -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/${{env.APP_NAME}}:${{ github.sha }} -f src/BcFinalTheaterManagementBff/Dockerfile
        docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/${{env.APP_NAME}}:${{ github.sha }}
-
+      
     - name: 'Publish App Image to ACR'
       uses: 'azure/aci-deploy@v1'
       with:
@@ -60,6 +60,23 @@ jobs:
        registry-password: ${{ secrets.REGISTRY_PASSWORD }}
        name: aci-${{ steps.vars.outputs.url_tag }}
        location: 'West US 2'
+
+    - name: Build Docker Image - FB
+      run: |
+       docker build . -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/${{env.APP_NAME}}:${{ github.sha }} -f src/FakeMovieCatalogSvc/Dockerfile
+       docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/${{env.APP_NAME}}-fakebackend:${{ github.sha }}
+      
+    - name: 'Publish App Image to ACR - FB'
+      uses: 'azure/aci-deploy@v1'
+      with:
+       resource-group: ${{ secrets.ACR_RESOURCE_GROUP }}
+       dns-name-label: ${{ secrets.ACR_RESOURCE_GROUP }}${{ github.sha }}
+       image: ${{ secrets.REGISTRY_LOGIN_SERVER }}/${{env.APP_NAME}}-fakebackend:${{ github.sha }}
+       registry-login-server: ${{ secrets.REGISTRY_LOGIN_SERVER }}
+       registry-username: ${{ secrets.REGISTRY_USERNAME }}
+       registry-password: ${{ secrets.REGISTRY_PASSWORD }}
+       name: aci-fb-${{ steps.vars.outputs.url_tag }}
+       location: 'West US 2'   
 
     - name: Pull HELM chart
       run: |
@@ -94,6 +111,21 @@ jobs:
            --set-string ingress.annotations."nginx\.ingress\.kubernetes\.io/use-regex"="true" \
            --set livenessProbe.path=/\hc \
            --set readinessProbe.path=/\hc \
+
+    - name: publish Fakebackend App to AKS
+      run: |
+         helm upgrade ${{ steps.vars.outputs.url_tag }}-fb ./${{env.ACR_HELM_CHART_NAME}} \
+           --namespace ${{ steps.vars.outputs.url_tag }} \
+           --create-namespace \
+           --install \
+           --wait \
+           --set image.repository=${{ secrets.REGISTRY_LOGIN_SERVER }}/${{env.APP_NAME}}-fakebackend \
+           --set nameOverride=${{env.APP_NAME}}-fb \
+           --set image.tag=${{ github.sha }} \
+           --set replicaCount=1  \
+           --set ingress.enabled= false \
+           --set livenessProbe.enabled= false \
+           --set readinessProbe.enabled= false \
 
     - uses: actions/github-script@v4
       name: 'Create github pr comment and deployment'
