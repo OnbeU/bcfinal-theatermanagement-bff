@@ -30,7 +30,7 @@ jobs:
     - name: Updating fake Url
       run: |
        echo "`jq '.ServicesUrl.MovieCatalogService="http://${{ steps.vars.outputs.url_tag }}-fb:80"' src/BcFinalTheaterManagementBff/appsettings.json`" > src/BcFinalTheaterManagementBff/appsettings.json
-   
+       echo "$(src/BcFinalTheaterManagementBff/appsettings.json)"
     - name: 'echo version tags'
       id: echovars
       run: |
@@ -80,7 +80,7 @@ jobs:
        registry-login-server: ${{ secrets.REGISTRY_LOGIN_SERVER }}
        registry-username: ${{ secrets.REGISTRY_USERNAME }}
        registry-password: ${{ secrets.REGISTRY_PASSWORD }}
-       name: aci-${{ steps.vars.outputs.url_tag }}-${{ steps.vars.outputs.random_tag_suffix_fb }}
+       name: aci-fbmoviesvc-${{ steps.vars.outputs.random_tag_suffix_fb }}
        location: 'West US 2'   
 
     - name: Pull HELM chart
