@@ -63,7 +63,7 @@ jobs:
 
     - name: Build Docker Image - FB
       run: |
-       docker build . -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/${{env.APP_NAME}}:${{ github.sha }}-fakebackend -f src/FakeMovieCatalogSvc/Dockerfile
+       docker build . -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/${{env.APP_NAME}}-fakebackend:${{ github.sha }} -f src/FakeMovieCatalogSvc/Dockerfile
        docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/${{env.APP_NAME}}-fakebackend:${{ github.sha }}
       
     - name: 'Publish App Image to ACR - FB'
