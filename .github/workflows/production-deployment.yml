@@ -10,11 +10,12 @@ env:
   APP_NAME: theatermanagement-bff
   ACR_HELM_REPO_NAME: helm/apptemplate
   ACR_HELM_CHART_NAME: apptemplate
+  
 jobs:
   build:
     name: Deployment to Production
     runs-on: ubuntu-latest
-
+    
     steps:
      # checkout the repo
     - name: 'Checkout GitHub Action'
@@ -32,7 +33,10 @@ jobs:
          echo  URL TAG -${{steps.vars.outputs.url_tag}}
          echo  PR URL-${{steps.vars.outputs.pr_url}}
          echo  random tag suffix-${{steps.vars.outputs.random_tag_suffix}}
-   
+    - name: Updating fake Url
+      run: |
+       echo "`jq '.ServicesUrl.MovieCatalogService="https://production-moviecatalog-svc.${{secrets.TEAM_NAME}}.${{secrets.HOST_URL}}"' src/BcFinalTheaterManagementBff/appsettings.json`" > src/BcFinalTheaterManagementBff/appsettings.json
+     
     - name: 'Login via Azure CLI'
       uses: azure/login@v1
       with:
