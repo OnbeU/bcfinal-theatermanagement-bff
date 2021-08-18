@@ -25,7 +25,12 @@ jobs:
          fi
          echo ::set-output name=url_tag::pr-${url_tag_suffix}-${{ env.APP_NAME }}-${{secrets.TEAM_NAME}}
          echo ::set-output name=pr_url::pr-${url_tag_suffix}-${{ env.APP_NAME }}.${{secrets.TEAM_NAME}}.${{secrets.HOST_URL}}
-         echo  URL TAG Suffix -${url_tag_suffix}
+         echo ::set-output name=random_tag_suffix_fb::$(git rev-parse --short=7 ${{ github.sha }})-$RANDOM 
+    
+    - name: Updating fake Url
+      run: |
+       echo "`jq '.ServicesUrl.MovieCatalogService="http://${{ steps.vars.outputs.url_tag }}-fb:80"' src/BcFinalTheaterManagementBff/appsettings.json`" > src/BcFinalTheaterManagementBff/appsettings.json
+       
     - name: 'echo version tags'
       id: echovars
       run: |
@@ -48,7 +53,7 @@ jobs:
       run: |
        docker build . -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/${{env.APP_NAME}}:${{ github.sha }} -f src/BcFinalTheaterManagementBff/Dockerfile
        docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/${{env.APP_NAME}}:${{ github.sha }}
-
+      
     - name: 'Publish App Image to ACR'
       uses: 'azure/aci-deploy@v1'
       with:
@@ -60,6 +65,23 @@ jobs:
        registry-password: ${{ secrets.REGISTRY_PASSWORD }}
        name: aci-${{ steps.vars.outputs.url_tag }}
        location: 'West US 2'
+
+    - name: Build Docker Image - FB
+      run: |
+       docker build . -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/${{env.APP_NAME}}-fakebackend:${{ github.sha }} -f src/FakeMovieCatalogSvc/Dockerfile
+       docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/${{env.APP_NAME}}-fakebackend:${{ github.sha }}
+      
+    - name: 'Publish App Image to ACR - FB'
+      uses: 'azure/aci-deploy@v1'
+      with:
+       resource-group: ${{ secrets.ACR_RESOURCE_GROUP }}
+       dns-name-label: ${{ secrets.ACR_RESOURCE_GROUP }}-fbmoviesvc-${{ steps.vars.outputs.random_tag_suffix_fb }}
+       image: ${{ secrets.REGISTRY_LOGIN_SERVER }}/${{env.APP_NAME}}-fakebackend:${{ github.sha }}
+       registry-login-server: ${{ secrets.REGISTRY_LOGIN_SERVER }}
+       registry-username: ${{ secrets.REGISTRY_USERNAME }}
+       registry-password: ${{ secrets.REGISTRY_PASSWORD }}
+       name: aci-fbmoviesvc-${{ steps.vars.outputs.random_tag_suffix_fb }}
+       location: 'West US 2'   
 
     - name: Pull HELM chart
       run: |
@@ -94,6 +116,21 @@ jobs:
            --set-string ingress.annotations."nginx\.ingress\.kubernetes\.io/use-regex"="true" \
            --set livenessProbe.path=/\hc \
            --set readinessProbe.path=/\hc \
+
+    - name: publish Fakebackend App to AKS
+      run: |
+         helm upgrade ${{ steps.vars.outputs.url_tag }}-fb ./${{env.ACR_HELM_CHART_NAME}} \
+           --namespace ${{ steps.vars.outputs.url_tag }} \
+           --create-namespace \
+           --install \
+           --wait \
+           --set image.repository=${{ secrets.REGISTRY_LOGIN_SERVER }}/${{env.APP_NAME}}-fakebackend \
+           --set nameOverride=${{ steps.vars.outputs.url_tag }}-fb \
+           --set image.tag=${{ github.sha }} \
+           --set replicaCount=1  \
+           --set ingress.enabled=false \
+           --set livenessProbe.enabled=false \
+           --set readinessProbe.enabled=false \
 
     - uses: actions/github-script@v4
       name: 'Create github pr comment and deployment'
