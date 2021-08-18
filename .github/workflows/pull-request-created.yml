@@ -30,7 +30,7 @@ jobs:
     - name: Updating fake Url
       run: |
        echo "`jq '.ServicesUrl.MovieCatalogService="http://${{ steps.vars.outputs.url_tag }}-fb:80"' src/BcFinalTheaterManagementBff/appsettings.json`" > src/BcFinalTheaterManagementBff/appsettings.json
-       echo "$(src/BcFinalTheaterManagementBff/appsettings.json)"
+       
     - name: 'echo version tags'
       id: echovars
       run: |
@@ -75,7 +75,7 @@ jobs:
       uses: 'azure/aci-deploy@v1'
       with:
        resource-group: ${{ secrets.ACR_RESOURCE_GROUP }}
-       dns-name-label: ${{ secrets.ACR_RESOURCE_GROUP }}${{ github.sha }}
+       dns-name-label: ${{ secrets.ACR_RESOURCE_GROUP }}-fbmoviesvc-${{ github.sha }}
        image: ${{ secrets.REGISTRY_LOGIN_SERVER }}/${{env.APP_NAME}}-fakebackend:${{ github.sha }}
        registry-login-server: ${{ secrets.REGISTRY_LOGIN_SERVER }}
        registry-username: ${{ secrets.REGISTRY_USERNAME }}
