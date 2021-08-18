@@ -1,6 +1,7 @@
 ﻿using BcFinalTheaterManagementBff.Models;
 using ClientForMovieCatalogService;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,17 +16,19 @@ namespace BcFinalTheaterManagementBff.Controllers
     {
         private readonly ILogger<MoviesController> _logger;
         private readonly HttpClient _httpClient;
+        private readonly IConfiguration configuration;
 
-        public MoviesController(ILogger<MoviesController> logger, HttpClient httpClient)
+        public MoviesController(ILogger<MoviesController> logger, HttpClient httpClient, IConfiguration configuration)
         {
             _logger = logger;
             _httpClient = httpClient;
+            this.configuration = configuration;
         }
 
         [HttpGet]
         public async Task<IEnumerable<Movie>> GetAsync()
         {
-            var client = new MovieCatalogClient(_httpClient);
+            var client = new MovieCatalogClient(_httpClient, configuration.GetSection("ServicesUrl:MovieCatalogService").Value);
             var catalogItems = await client.CatalogitemsAllAsync();
 
             return catalogItems
