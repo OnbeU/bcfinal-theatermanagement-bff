@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace BcFinalTheaterManagementBff.Controllers
 {
+    // Just a comment.
     [ApiController]
     [Route("movies")]
     public class MoviesController : ControllerBase
