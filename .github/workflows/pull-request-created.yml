@@ -75,7 +75,7 @@ jobs:
       uses: 'azure/aci-deploy@v1'
       with:
        resource-group: ${{ secrets.ACR_RESOURCE_GROUP }}
-       dns-name-label: ${{ secrets.ACR_RESOURCE_GROUP }}-fbmoviesvc-${{ github.sha }}
+       dns-name-label: ${{ secrets.ACR_RESOURCE_GROUP }}-fbmoviesvc-${{ steps.vars.outputs.random_tag_suffix_fb }}
        image: ${{ secrets.REGISTRY_LOGIN_SERVER }}/${{env.APP_NAME}}-fakebackend:${{ github.sha }}
        registry-login-server: ${{ secrets.REGISTRY_LOGIN_SERVER }}
        registry-username: ${{ secrets.REGISTRY_USERNAME }}
